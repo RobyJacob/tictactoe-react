@@ -27,7 +27,6 @@ function Board({ xIsNext, squares, onPlay }) {
       if (squares[i] || winner) return;
       const newSquares = squares.slice()
       newSquares[i] = xIsNext ? 'X' : 'O'
-      console.log(newSquares)
       onPlay(newSquares)
     }
   
@@ -37,11 +36,8 @@ function Board({ xIsNext, squares, onPlay }) {
         const board = []
         const squareComps = [[], [], []]
         
-        for (let i = 0; i < 3; i++) {
-            for (let j = 0; j < 3; j++) {
-                const idx = 3 * i + j
-                squareComps[i][j] = <Square value={ squares[idx] } clickHandler={ () => handleClick(idx) } />
-            }
+        for (let i = 0; i < 9; i++) {
+            squareComps[i % 3].push(<Square value={ squares[i] } clickHandler={ () => handleClick(i) } />)
         }
 
         for (let i = 0; i < 3; i++) {
