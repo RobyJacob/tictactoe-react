@@ -14,7 +14,7 @@ function calculateWinner(squares) {
 
     for (let i = 0; i < lines.length; i++) {
         let [a, b, c] = lines[i]
-        if (squares[a] && squares[a] === squares[b] && squares[a] === squares[c]) return squares[a]
+        if (squares[a] && squares[a] === squares[b] && squares[a] === squares[c]) return lines[i]
     }
 
     for (let i = 0; i < squares.length; i++) {
@@ -34,7 +34,7 @@ function Board({ xIsNext, squares, onPlay }) {
       onPlay(newSquares)
     }
   
-    const status = winner ? (winner === -1 ? 'Draw' : 'Winner: ' + winner) : 
+    const status = winner ? (winner === -1 ? 'It\'s tie!' : 'Winner: ' + squares[winner[0]]) : 
         'Next player: ' + (xIsNext ? 'X' : 'O')
     
     const setUp = (() => {
@@ -42,7 +42,9 @@ function Board({ xIsNext, squares, onPlay }) {
         const squareComps = [[], [], []]
         
         for (let i = 0; i < 9; i++) {
-            squareComps[i % 3].push(<Square value={ squares[i] } clickHandler={ () => handleClick(i) } />)
+            squareComps[i % 3].push(<Square value={ squares[i] } clickHandler={ () => handleClick(i) } 
+                isWinning={ winner && winner !== -1 && (winner[0] === i || winner[1] === i || winner[2] === i) ? 
+                true : false }/>)
         }
 
         for (let i = 0; i < 3; i++) {

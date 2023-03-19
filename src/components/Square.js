@@ -1,7 +1,8 @@
-function Square({ value, clickHandler }) {
+function Square({ value, clickHandler, isWinning }) {
     return (
       <button className='square' 
-        onClick={ clickHandler }>
+        onClick={ clickHandler }
+        style={{ backgroundColor: isWinning ? 'green' : '' }}>
         { value }
       </button>
     )
