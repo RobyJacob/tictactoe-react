@@ -33,17 +33,15 @@ function Board({ xIsNext, squares, onPlay }) {
   
     const status = winner ? 'Winner: ' + winner : 'Next player: ' + (xIsNext ? 'X' : 'O')
     
-    const setUp = () => {
+    const setUp = (() => {
         const board = []
-        const squareComps = []
+        const squareComps = [[], [], []]
         
         for (let i = 0; i < 3; i++) {
-            const squareComp = []
             for (let j = 0; j < 3; j++) {
                 const idx = 3 * i + j
-                squareComp.push(<Square value={ squares[idx] } clickHandler={ () => handleClick(idx) } />)
+                squareComps[i][j] = <Square value={ squares[idx] } clickHandler={ () => handleClick(idx) } />
             }
-            squareComps.push(squareComp)
         }
 
         for (let i = 0; i < 3; i++) {
@@ -51,12 +49,12 @@ function Board({ xIsNext, squares, onPlay }) {
         }
 
         return board
-    }
+    })()
 
     return (
       <>
         <div className='status'> { status } </div>
-        { setUp() }
+        { setUp }
       </>
     )
 }
