@@ -17,7 +17,11 @@ function calculateWinner(squares) {
         if (squares[a] && squares[a] === squares[b] && squares[a] === squares[c]) return squares[a]
     }
 
-    return null
+    for (let i = 0; i < squares.length; i++) {
+        if (squares.some(n => n === null)) return null
+    }
+
+    return -1
 }
 
 function Board({ xIsNext, squares, onPlay }) {
@@ -30,7 +34,8 @@ function Board({ xIsNext, squares, onPlay }) {
       onPlay(newSquares)
     }
   
-    const status = winner ? 'Winner: ' + winner : 'Next player: ' + (xIsNext ? 'X' : 'O')
+    const status = winner ? (winner === -1 ? 'Draw' : 'Winner: ' + winner) : 
+        'Next player: ' + (xIsNext ? 'X' : 'O')
     
     const setUp = (() => {
         const board = []
@@ -41,7 +46,7 @@ function Board({ xIsNext, squares, onPlay }) {
         }
 
         for (let i = 0; i < 3; i++) {
-            board.push(<div className='board-row'> { squareComps[i] } </div>)
+            board.push(<div className='board-row' key={ i }> { squareComps[i] } </div>)
         }
 
         return board

@@ -7,7 +7,7 @@ function Game() {
   const [curMove, setCurMove] = useState(0)
 
   function handlePlay(nextSquares) {
-    const nextHistory = [...history, nextSquares]
+    const nextHistory = [...history.slice(0, curMove + 1), nextSquares]
     setHistory(nextHistory)
     setCurMove(nextHistory.length - 1)
   }
@@ -26,7 +26,7 @@ function Game() {
     }
 
     return (
-      <li>
+      <li key={ move }>
       {
         move === curMove ?
         <p> { description } </p> : 
